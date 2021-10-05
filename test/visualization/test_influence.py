@@ -24,3 +24,6 @@ def test_influence():
     assert out.size() == (data.num_nodes, data.num_nodes)
     assert torch.allclose(
         out.sum(dim=-1), torch.ones(data.num_nodes), atol=1e-04)
+
+if __name__ == '__main__':
+    test_influence()
