@@ -226,3 +226,16 @@ def test_trimesh():
 
     assert pos.tolist() == data.pos.tolist()
     assert face.tolist() == data.face.tolist()
+
+
+if __name__ == '__main__':
+    test_to_scipy_sparse_matrix()
+    test_from_scipy_sparse_matrix()
+    test_to_networkx()
+    test_to_networkx_undirected()
+    test_from_networkx()
+    test_from_networkx_group_attrs()
+    test_from_networkx_group_attrs()
+    test_networkx_vice_versa_convert()
+    test_from_networkx_non_consecutive()
+    test_from_networkx_inverse()

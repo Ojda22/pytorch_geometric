@@ -19,3 +19,7 @@ def test_homophily():
     assert pytest.approx(homophily(edge_index, y, method='node')) == 0.6
     assert pytest.approx(homophily(adj, y, method='node')) == 0.6
     assert homophily(edge_index, y, batch, method='node').tolist() == [1., 0.]
+
+
+if __name__ == '__main__':
+    test_homophily()

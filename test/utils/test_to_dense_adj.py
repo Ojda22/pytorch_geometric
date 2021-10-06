@@ -64,3 +64,8 @@ def test_to_dense_adj_with_duplicate_entries():
     assert adj.size() == (2, 3, 3)
     assert adj[0].tolist() == [[3, 3, 0], [4, 0, 0], [0, 0, 0]]
     assert adj[1].tolist() == [[0, 5, 0], [0, 0, 13], [8, 0, 0]]
+
+
+if __name__ == '__main__':
+    test_to_dense_adj()
+    test_to_dense_adj_with_duplicate_entries()

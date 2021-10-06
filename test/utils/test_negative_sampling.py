@@ -117,3 +117,10 @@ def test_batched_negative_sampling():
     assert (adj & neg_adj).sum() == 0
     assert neg_adj[:4, 4:].sum() == 0
     assert neg_adj[4:, :4].sum() == 0
+
+
+if __name__ == '__main__':
+    test_batched_negative_sampling()
+    test_structured_negative_sampling()
+    test_bipartite_negative_sampling()
+    test_edge_index_to_vector_and_vice_versa()

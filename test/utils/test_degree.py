@@ -7,3 +7,6 @@ def test_degree():
     deg = degree(row, dtype=torch.long)
     assert deg.dtype == torch.long
     assert deg.tolist() == [3, 1, 1]
+
+if __name__ == '__main__':
+    test_degree()

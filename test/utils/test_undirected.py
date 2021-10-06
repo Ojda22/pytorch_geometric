@@ -24,3 +24,8 @@ def test_to_undirected():
 
     edge_index = to_undirected(torch.stack([row, col], dim=0))
     assert edge_index.tolist() == [[0, 1, 1, 2], [1, 0, 2, 1]]
+
+
+if __name__ == '__main__':
+    test_to_undirected()
+    test_is_undirected()

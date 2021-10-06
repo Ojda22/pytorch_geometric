@@ -14,3 +14,7 @@ def test_grid():
     assert row.tolist() == expected_row
     assert col.tolist() == expected_col
     assert pos.tolist() == expected_pos
+
+
+if __name__ == '__main__':
+    test_grid()

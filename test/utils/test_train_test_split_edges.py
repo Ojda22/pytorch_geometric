@@ -23,3 +23,7 @@ def test_train_test_split_edges():
     assert data.train_pos_edge_attr.size() == (10, )
     assert data.val_pos_edge_attr.size() == (2, )
     assert data.test_pos_edge_attr.size() == (3, )
+
+
+if __name__ == '__main__':
+    test_train_test_split_edges()

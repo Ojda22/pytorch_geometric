@@ -30,3 +30,8 @@ def test_mean_iou():
     assert out.size() == (2, )
     assert out[0] == (1 / 3 + 1 / 3) / 2
     assert out[1] == 0.25
+
+
+if __name__ == '__main__':
+    test_metric()
+    test_mean_iou()
