@@ -45,6 +45,9 @@ from .svd_feature_reduction import SVDFeatureReduction
 from .remove_training_classes import RemoveTrainingClasses
 from .random_node_split import RandomNodeSplit
 from .random_link_split import RandomLinkSplit
+from .add_metapaths import AddMetaPaths
+from .largest_connected_components import LargestConnectedComponents
+from .virtual_node import VirtualNode
 
 __all__ = [
     'BaseTransform',
@@ -94,6 +97,9 @@ __all__ = [
     'RemoveTrainingClasses',
     'RandomNodeSplit',
     'RandomLinkSplit',
+    'AddMetaPaths',
+    'LargestConnectedComponents',
+    'VirtualNode',
 ]
 
 classes = __all__

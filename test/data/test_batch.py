@@ -1,12 +1,13 @@
 import os
-import sys
 import random
+import sys
 
-import torch
 import numpy as np
+import torch
 from torch_sparse import SparseTensor
+
 import torch_geometric
-from torch_geometric.data import Data, HeteroData, Batch
+from torch_geometric.data import Batch, Data, HeteroData
 
 
 def get_edge_index(num_src_nodes, num_dst_nodes, num_edges):
@@ -340,3 +341,48 @@ def test_hetero_batch():
     assert torch.allclose(out2[e1].edge_attr, data2[e1].edge_attr)
     assert out2[e2].edge_index.tolist() == data2[e2].edge_index.tolist()
     assert torch.allclose(out2[e2].edge_attr, data2[e2].edge_attr)
+
+
+def test_pair_data_batching():
+    class PairData(Data):
+        def __inc__(self, key, value, *args, **kwargs):
+            if key == 'edge_index_s':
+                return self.x_s.size(0)
+            if key == 'edge_index_t':
+                return self.x_t.size(0)
+            else:
+                return super().__inc__(key, value, *args, **kwargs)
+
+    x_s = torch.randn(5, 16)
+    edge_index_s = torch.tensor([
+        [0, 0, 0, 0],
+        [1, 2, 3, 4],
+    ])
+    x_t = torch.randn(4, 16)
+    edge_index_t = torch.tensor([
+        [0, 0, 0],
+        [1, 2, 3],
+    ])
+
+    data = PairData(x_s=x_s, edge_index_s=edge_index_s, x_t=x_t,
+                    edge_index_t=edge_index_t)
+    batch = Batch.from_data_list([data, data])
+
+    assert torch.allclose(batch.x_s, torch.cat([x_s, x_s], dim=0))
+    assert batch.edge_index_s.tolist() == [[0, 0, 0, 0, 5, 5, 5, 5],
+                                           [1, 2, 3, 4, 6, 7, 8, 9]]
+
+    assert torch.allclose(batch.x_t, torch.cat([x_t, x_t], dim=0))
+    assert batch.edge_index_t.tolist() == [[0, 0, 0, 4, 4, 4],
+                                           [1, 2, 3, 5, 6, 7]]
+
+
+def test_batch_with_empty_list():
+    x = torch.randn(4, 1)
+    edge_index = torch.tensor([[0, 1, 1, 2, 2, 3], [1, 0, 2, 1, 3, 2]])
+    data = Data(x=x, edge_index=edge_index, nontensor=[])
+
+    batch = Batch.from_data_list([data, data])
+    assert batch.nontensor == [[], []]
+    assert batch[0].nontensor == []
+    assert batch[1].nontensor == []
