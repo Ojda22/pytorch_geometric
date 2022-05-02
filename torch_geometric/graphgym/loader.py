@@ -1,6 +1,8 @@
+import os
 from typing import Callable
 
 import torch
+from torch_geometric.data import InMemoryDataset
 
 import torch_geometric.graphgym.register as register
 import torch_geometric.transforms as T
@@ -47,6 +49,25 @@ register.register_dataset('PubMed', planetoid_dataset('PubMed'))
 register.register_dataset('PPI', PPI)
 
 
+class MyDataset(InMemoryDataset):
+    def __init__(self, dataset_root, dataset_name, transform=None, pre_transform=None):
+        self.dataset_root = dataset_root
+        self.dataset_name = dataset_name
+        super(MyDataset, self).__init__(root=dataset_root, transform=transform, pre_transform=pre_transform)
+        self.data, self.slices = torch.load(self.processed_paths[0])
+
+    @property
+    def processed_dir(self):
+        # type = "processed_single" if cfg.dataset.experiment == "CDataSetNew" else f'project_split_{cfg.dataset.round}'
+        # type = "processed_single" if "CDataSetNew" in cfg.dataset.experiment else f'project_split_{cfg.dataset.round}'
+        data_path = os.path.join(self.dataset_root, self.dataset_name)
+        return data_path
+
+    @property
+    def processed_file_names(self):
+        return ['dataset.pt']
+
+
 def load_pyg(name, dataset_dir):
     """
     Load PyG dataset objects. (More PyG datasets will be supported)
@@ -61,6 +82,8 @@ def load_pyg(name, dataset_dir):
     dataset_dir = '{}/{}'.format(dataset_dir, name)
     if name in ['Cora', 'CiteSeer', 'PubMed']:
         dataset = Planetoid(dataset_dir, name)
+    elif name == "MyDataset":
+        dataset = MyDataset(dataset_root=cfg.dataset.dir, dataset_name=cfg.dataset.experiment_data)
     elif name[:3] == 'TU_':
         # TU_IMDB doesn't have node features
         if name[3:] == 'IMDB':

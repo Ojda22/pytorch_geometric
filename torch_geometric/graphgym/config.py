@@ -60,7 +60,7 @@ def set_cfg(cfg):
     cfg.round = 4
 
     # Tensorboard support for each run
-    cfg.tensorboard_each_run = False
+    cfg.tensorboard_each_run = True
 
     # Tensorboard support for aggregated results
     cfg.tensorboard_agg = True
@@ -107,6 +107,9 @@ def set_cfg(cfg):
     # Dataset options
     # ----------------------------------------------------------------------- #
     cfg.dataset = CN()
+
+    # EXPERIMENTATION
+    cfg.dataset.experiment_data = ''
 
     # Name of the dataset
     cfg.dataset.name = 'Cora'
