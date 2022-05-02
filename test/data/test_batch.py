@@ -386,3 +386,7 @@ def test_batch_with_empty_list():
     assert batch.nontensor == [[], []]
     assert batch[0].nontensor == []
     assert batch[1].nontensor == []
+
+
+if __name__ == '__main__':
+    test_batch()

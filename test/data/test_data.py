@@ -7,7 +7,6 @@ import torch.multiprocessing as mp
 import torch_geometric
 from torch_geometric.data import Data
 
-
 def test_data():
     torch_geometric.set_debug(True)
 
@@ -213,3 +212,7 @@ def test_data_share_memory():
     for data in data_list:
         assert data.x.is_shared()
         assert torch.allclose(data.x, torch.full((8, ), 4.))
+
+
+if __name__ == '__main__':
+    test_data()
