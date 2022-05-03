@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-CONFIG=example_node
-GRID=example
-REPEAT=3
+CONFIG=${1:-example_node}
+GRID=${2:-example}
+REPEAT=1
 MAX_JOBS=8
 SLEEP=1
 MAIN=main
