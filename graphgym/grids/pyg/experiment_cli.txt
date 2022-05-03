@@ -1,0 +1,8 @@
+gnn.layers_pre_mp l_pre [1,2,3]
+gnn.layers_mp l_mp [2,4,6,8]
+gnn.layers_post_mp l_post [1,2,3]
+gnn.stage_type stage ['skipsum','skipconcat','stack']
+gnn.agg agg ['add','mean','max']
+gnn.layer_type l_t ['gcnconv','sageconv','gatconv','splineconv','ginconv','generalconv']
+# train.batch_size batch [32,64]
+# gnn.dropout drop [0.0,0.3,0.6
