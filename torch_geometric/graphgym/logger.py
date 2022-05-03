@@ -101,6 +101,7 @@ class Logger(object):
             precision_score,
             recall_score,
             roc_auc_score,
+            matthews_corrcoef
         )
 
         true, pred_score = torch.cat(self._true), torch.cat(self._pred)
@@ -115,6 +116,7 @@ class Logger(object):
             'recall': round(recall_score(true, pred_int), cfg.round),
             'f1': round(f1_score(true, pred_int), cfg.round),
             'auc': round(r_a_score, cfg.round),
+            'mcc': round(matthews_corrcoef(true, pred_int), cfg.round)
         }
 
     def classification_multi(self):
